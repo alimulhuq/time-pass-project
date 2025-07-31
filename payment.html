@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment for event</title>
+    <link rel="stylesheet" href="formStyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heading-div">
+            <h1>Pay to confirm your attendance</h1>
+        </div>
+        <div class="form-div">
+            <form action="dataBase.php" method="POST">
+                <input type="digit" name="paymentID" placeholder="Payment ID" required>
+                <input type="digit" name="userID" placeholder="User ID" required>
+                <input type="digit" name="eventID" placeholder="Event ID" required>
+                <input type="digit" name="payAmount" placeholder="Payable Amount" required>
+                <input type="digit" name="paymentMethod" placeholder="Payment Method" required>
+                <input type="datetime-local" name="dataTime" placeholder="Date & Time" required>
+                <input type="text" name="paymentStatus" placeholder="Payment Status" required>
+                <input type="digit" name="transictionID" placeholder="Transiction ID" required>
+		        <button class="submitBtn" name="paymentDetails">Pay Bill</button>
+	        </form>
+        </div>
+    </div>
+</body>
+</html>

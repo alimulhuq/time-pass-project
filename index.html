@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="index-container">
+        <div class="head-div">
+            <h1>Welcome to Event Management System</h1>
+        </div>
+        <div class="registration-div">
+            <button><a href="organizer.html">Register As Organizer</a></button>
+            <button><a href="guest.html">Register As Guest</a></button>
+            <form action="showDetails.php" method="POST">
+                <button name="hostDetail">Host Detail</button>
+                <button name="guestDetail">Guest Detail</button>
+            </form>
+            <form action="showDetails.php" method="POST">
+                <button name="eventDetail">Event Detail</button>
+                <button name="paymentDetail">Payment Detail</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

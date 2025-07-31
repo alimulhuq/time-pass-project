@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendee registration</title>
+    <link rel="stylesheet" href="formStyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heading-div">
+            <h1>Fill Up the Form to Attend Event</h1>
+        </div>
+        <div class="form-div">
+            <form action="dataBase.php" method="POST">
+                <input type="number" name="guestID" placeholder="Guest ID" required>
+                <input type="text" name="guestName" placeholder="Guest Name" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <input type="digit" name="guestPhoneContact" placeholder="Phone Number" required>
+                <input type="text" name="guestEmail" placeholder="Email" required>
+                <input type="text" name="organizationName" placeholder="Organization" required>
+                <input type="text" name="hostName" placeholder="Host Name" required>
+                <input type="datetime-local" name="eventDateTime" placeholder="Event Data & Time" required>
+                <input type="text" name="attendStatus" placeholder="Attend Status" required>
+		        <button class="submitBtn" name="guestDetails">Submit</button>
+	        </form>
+        </div>
+    </div>
+</body>
+</html>
