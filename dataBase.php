@@ -8,20 +8,25 @@
 
     if ($conn){
         if (isset($_POST['hostDetails'])) {
-            $sql = "INSERT INTO host_details (host_id, event_id, event_title, organization_name, host_name, event_type, phone_number, host_email, event_address, data_time, event_status) 
+            $sql = "INSERT INTO host_details (host_id, organization_name, host_name, phone_number, host_email) 
                     VALUES (
                         '{$_POST['hostID']}',
+                        '{$_POST['organizationName']}',
+                        '{$_POST['hostName']}',
+                        '{$_POST['hostPhoneContact']}',
+                        '{$_POST['hostEmail']}',
+                    )";
+            $sqlEvent = "INSERT INTO event_details (event_id, event_title, organization_name, event_type,event_address, data_time, event_status) 
+                    VALUES (
                         '{$_POST['eventID']}',
                         '{$_POST['eventTitle']}',
                         '{$_POST['organizationName']}',
-                        '{$_POST['hostName']}',
                         '{$_POST['eventType']}',
-                        '{$_POST['hostPhoneContact']}',
-                        '{$_POST['hostEmail']}',
                         '{$_POST['eventAddress']}',
                         '{$_POST['eventDateTime']}',
                         '{$_POST['eventStatus']}'
                     )";
+            mysqli_query($conn, $sqlEvent);
         } 
         elseif (isset($_POST['guestDetails'])) {
             $sql = "INSERT INTO guest_details(guest_ID, guest_name, guest_address, phone_number, guest_email, organization_name, host_name, data_time, attend_status)
@@ -38,7 +43,7 @@
                     )";
         }
         elseif(isset($_POST['paymentDetails'])){
-            $sql = "INSERT INTO payment_details(Payment_ID, User_ID, Event_ID, Payable_Amount, Payment_method, Date_Time, Payment_Status, Transiction_ID)
+            $sql = "INSERT INTO payment_details(Payment_ID, User_ID, Event_ID, Payable_Amount, Payment_method, Date_Time, Payment_Status, Transaction_ID)
                     VALUES(
                         '{$_POST['paymentID']}',
                         '{$_POST['userID']}',
@@ -47,10 +52,16 @@
                         '{$_POST['paymentMethod']}',
                         '{$_POST['dataTime']}',
                         '{$_POST['paymentStatus']}',
-                        '{$_POST['transictionID']}',
+                        '{$_POST['transactionID']}'
 
                     )";
-
+            echo "<p>Your payment is completed</p>";
+        }
+        if(mysqli_query($conn, $sql)){
+            echo "<p>values are inserted</p>";
+        }
+        else{
+            echo "<p>values are not inserted</p>";
         }
     }
 ?>
@@ -115,6 +126,9 @@
                     <button name='paymentProcess'><a href='payment.html'>Payment</a></button>
                 </div>
             ";
+        }
+        elseif(isset($_POST['hostDetails'])){
+            echo "<p>thanks for registration an event</p>";
         }
     ?>
 </body>

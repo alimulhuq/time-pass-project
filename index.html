@@ -7,22 +7,70 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="index-container">
-        <div class="head-div">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">📅 EventManager</div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Events</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </nav>
+            <div class="search-box">
+                <input type="text" placeholder="Search events...">
+                <button>🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
             <h1>Welcome to Event Management System</h1>
+            <p class="subtitle">Streamline your event planning process</p>
+            
+            <div class="button-container">
+                <button class="btn-large"><a href="organizer.html">Register As Organizer</a></button>
+                <button class="btn-large"><a href="guest.html">Register As Guest</a></button>
+                
+                <div class="btn-grid">
+                    <form action="showDetails.php" method="POST">
+                        <button class="btn-small" name="hostDetail">Host Detail</button>
+                        <button class="btn-small" name="guestDetail">Guest Detail</button>
+                        <button class="btn-small" name="eventDetail">Event Detail</button>
+                        <button class="btn-small" name="paymentDetail">Payment Detail</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="registration-div">
-            <button><a href="organizer.html">Register As Organizer</a></button>
-            <button><a href="guest.html">Register As Guest</a></button>
-            <form action="showDetails.php" method="POST">
-                <button name="hostDetail">Host Detail</button>
-                <button name="guestDetail">Guest Detail</button>
-            </form>
-            <form action="showDetails.php" method="POST">
-                <button name="eventDetail">Event Detail</button>
-                <button name="paymentDetail">Payment Detail</button>
-            </form>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>📅 EventManager</h3>
+                    <p>Your event management solution</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="#">Home</a>
+                    <a href="#">Events</a>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p>📧 support@eventmanager.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventManager. All rights reserved.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 </body>
 </html>
