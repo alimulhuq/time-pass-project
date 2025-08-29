@@ -1,242 +1,247 @@
-<?php
-    $serverName = "localhost";
-    $hostName = "root";
-    $password = "";
-    $dataBaseName = "event_management"; // your database name in localhost
-
-    $conn = mysqli_connect($serverName, $hostName, $password, $dataBaseName);
-
-    if($conn -> connect_error){
-        die("connection failed : ". $conn -> connect_error);
-    }
-?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         table {
-            width: 90%;
-            margin: 30px auto;
+            width: 100%;
             border-collapse: collapse;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 16px;
-            background-color: #f9f9f9;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            margin-top: 20px;
+            border-radius: 15px;
             overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+        }
+        table th, table td {
+            padding: 15px 20px;
+            text-align: left;
+            color: #4a5568;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         table th {
-            background-color: #4CAF50;
-            color: white;
-            text-align: left;
-            padding: 12px 15px;
-        }
-        table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
         }
         table tr:hover {
-            background-color: #f1f1f1;
+            background: rgba(102, 126, 234, 0.1);
         }
-        .header {
-            background-color: #444;
-            color: #ccc;
-            text-align: center;
-            padding: 10px 20px;
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-
-        .action-button {
-            padding: 6px 12px;
+        #searchInput {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 25px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            color: white;
-            margin: 0 3px;
+            outline: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            font-size: 16px;
         }
-
-        .delete-button {
-            background-color: red;
-        }
-
-        .update-button {
-            background-color: #007bff;
+        a {
+            color: #667eea;
             text-decoration: none;
+            font-weight: 600;
         }
-
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: gray;
+        a:hover {
+            text-decoration: underline;
+        }
+        .top-links {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <?php
-        if(isset($_POST['hostDetail'])){
-            $sql = "SELECT host_id, host_name, phone_number, host_email FROM host_details";
-            $result = $conn -> query($sql);
-            if ($result -> num_rows > 0){
-                echo "<table>
-                    <tr>
-                        <th>Host ID</th>
-                        <th>Host Name</th>
-                        <th>Host Email</th>
-                        <th>Phone Number</th>
-                        <th>Action</th>
-                    </tr>";
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>Event Management System</h1>
+        <div class="nav-menu">
+            <a class="nav-btn" href="index.html">Home</a>
+            <a class="nav-btn" href="guest.html">Add Guest</a>
+            <a class="nav-btn" href="host.html">Add Host</a>
+            <a class="nav-btn" href="payment.html">Add Payment</a>
+            <div class="dropdown">
+                <button class="nav-btn dropdown-btn">View Data ▼</button>
+                <div class="dropdown-content">
+                    <form action="showDetails.php" method="POST">
+                        <button name="showHostDetails">Host Detail</button>
+                        <button name="showGuestDetails">Guest Detail</button>
+                        <button name="showPaymentDetails">Payment Detail</button>
+                        <button name="showEventDetails">Event Detail</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                while($row = $result -> fetch_assoc()) {
-                    echo "<tr>
-                        <td>" . $row["host_id"] . "</td>
-                        <td>" . $row["organization_name"] . "</td>
-                        <td>" . $row["host_name"] . "</td>
-                        <td>" . $row["host_email"] . "</td>
-                        <td>" . $row["phone_number"] . "</td>
-                        <td>
-                            <!-- Update Button -->
-                            <a href='update_data.php?id={$row['ID']}' name='hostDetailUpdate' class='action-button update-button'>Update</a>
-
-                            <!-- Delete Button -->
-                            <form method='POST' action='delete.php' style='display:inline;'>
-                                <input type='hidden' name='id' value='{$row['ID']}'>
-                                <button type='submit' name='hostDetailDelete' class='action-button delete-button'>Delete</button>
-                            </form>
-                        </td>
-                    </tr>";
-                }
-                echo "</table>";
-            } 
-            else {
-                echo "<p>0 results</p>";
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <?php
+            
+            if(isset($_POST["showGuestDetails"]) || (isset($_GET['role']) && $_GET['role'] === "guest")){
+                echo "<h2>Guest Records</h2>";
             }
-        }
-        elseif(isset($_POST['guestDetail'])){
-            $sql = "SELECT guest_id, guest_name, guest_address, phone_number, guest_email, attend_status FROM guest_details";
-            $result = $conn -> query($sql);
-            if ($result -> num_rows > 0){
-                echo "<table>
-                    <tr>
-                        <th>Guest ID</th>
-                        <th>Guest Name</th>
-                        <th>Guest Address</th>
-                        <th>Phone Number</th>
-                        <th>Guest Email</th>
-                        <th>Attend Status</th>
-                        <th>Action</th>
-                    </tr>";
-
-                while($row = $result -> fetch_assoc()) {
-                    echo "<tr>
-                        <td>" . $row["guest_ID"] . "</td>
-                        <td>" . $row["guest_name"] . "</td>
-                        <td>" . $row["guest_address"] . "</td>
-                        <td>" . $row["phone_number"] . "</td>
-                        <td>" . $row["guest_email"] . "</td>
-                        <td>" . $row["attend_status"] . "</td>
-                        <td>
-                            <!-- Update Button -->
-                            <a href='update_data.php?id={$row['ID']}' name='guestDetailUpdate' class='action-button update-button'>Update</a>
-
-                            <!-- Delete Button -->
-                            <form method='POST' action='delete.php' style='display:inline;'>
-                                <input type='hidden' name='id' value='{$row['ID']}'>
-                                <button type='submit' name='guestDetailDelete' class='action-button delete-button'>Delete</button>
-                            </form>
-                        </td>
-                    </tr>";
-                }
-                echo "</table>";
-            } 
-            else {
-                echo "<p>0 results</p>";
+            elseif (isset($_POST["showHostDetails"]) || (isset($_GET['role']) && $_GET['role'] === "host")) {
+                echo "<h2>Host Records</h2>";
             }
-        }
-        elseif(isset($_POST['paymentDetail'])){
-            $sql = "SELECT Payment_ID, User_ID, Event_ID, Payable_Amount, Payment_method, Date_Time, Payment_Status, Transaction_ID FROM payment_details";
-            $result = $conn -> query($sql);
-            if ($result -> num_rows > 0){
-                echo "<table>
-                    <tr>
-                        <th>Payment ID</th>
-                        <th>User ID</th>
-                        <th>Event ID</th>
-                        <th>Payable Amount</th>
-                        <th>Payment Method</th>
-                        <th>Date Time</th>
-                        <th>Transaction ID</th>
-                        <th>Action</th>
-                    </tr>";
-
-                while($row = $result -> fetch_assoc()) {
-                    echo "<tr>
-                        <td>" . $row["Payment_ID"] . "</td>
-                        <td>" . $row["User_ID"] . "</td>
-                        <td>" . $row["Event_ID"] . "</td>
-                        <td>" . $row["Payable_Amount"] . "</td>
-                        <td>" . $row["Payment_method"] . "</td>
-                        <td>" . $row["Date_Time"] . "</td>
-                        <td>" . $row["Transaction_ID"] . "</td>
-                        <td>
-                            <!-- Update Button -->
-                            <a href='update_data.php?id={$row['ID']}' class='action-button update-button'>Update</a>
-
-                            <!-- Delete Button -->
-                            <form method='POST' action='delete.php' style='display:inline;'>
-                                <input type='hidden' name='id' value='{$row['ID']}'>
-                                <button type='submit' class='action-button delete-button'>Delete</button>
-                            </form>
-                        </td>
-                    </tr>";
-                }
-                echo "</table>";
-            } 
-            else {
-                echo "<p>0 results</p>";
+            elseif(isset($_POST["showEventDetails"]) || (isset($_GET['role']) && $_GET['role'] === "event")){
+                echo "<h2>Event Records</h2>";
             }
-        }
-        elseif(isset($_POST['eventDetail'])){
-            $sql = "SELECT event_id, event_title, organization_name, event_type, event_address, data_time, event_status FROM host_details";
-            $result = $conn -> query($sql);
-            if ($result -> num_rows > 0){
-                echo "<table>
-                    <tr>
-                        <th>Event ID</th>
-                        <th>Event Title</th>
-                        <th>Organization Name</th>
-                        <th>Event Type</th>
-                        <th>Event Address</th>
-                        <th>Data Time</th>
-                        <th>Event Status</th>
-                        <th>Action</th>
-                    </tr>";
-
-                while($row = $result -> fetch_assoc()) {
-                    echo "<tr>
-                        <td>" . $row["event_id"] . "</td>
-                        <td>" . $row["event_title"] . "</td>
-                        <td>" . $row["organization_name"] . "</td>
-                        <td>" . $row["event_type"] . "</td>
-                        <td>" . $row["event_address"] . "</td>
-                        <td>" . $row["data_time"] . "</td>
-                        <td>" . $row["event_status"] . "</td>
-                        <td>
-                            <!-- Update Button -->
-                            <a href='update_data.php?id={$row['ID']}' class='action-button update-button'>Update</a>
-
-                            <!-- Delete Button -->
-                            <form method='POST' action='delete.php' style='display:inline;'>
-                                <input type='hidden' name='id' value='{$row['ID']}'>
-                                <button type='submit' class='action-button delete-button'>Delete</button>
-                            </form>
-                        </td>
-                    </tr>";
-                }
-                echo "</table>";
-            } 
-            else {
-                echo "<p>0 results</p>";
+            elseif (isset($_POST["showPaymentDetails"]) || (isset($_GET['role']) && $_GET['role'] === "payment")) {
+                echo "<h2>Payment Records</h2>";
             }
-        }
-    ?>
+        
+            $conn = new mysqli("localhost", "root", "", "event_management");
+            if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+
+            echo '<input type="text" id="searchInput" placeholder="Search records...">';
+            echo "<table>";
+            echo "<tr>";
+
+            // Table headers
+            if (isset($_POST["showGuestDetails"]) || (isset($_GET['role']) && $_GET['role'] === "guest")) {
+                echo "<th>Guest ID</th><th>Name</th><th>Address</th><th>Phone</th><th>Email</th><th>Organization</th><th>Event ID</th><th>Event Title</th><th>Action</th><th>Download Receipt</th>";
+            } 
+            elseif (isset($_POST["showHostDetails"]) || (isset($_GET['role']) && $_GET['role'] === "host")) {
+                echo "<th>Host ID</th><th>Name</th><th>Phone</th><th>Email</th><th>Organization</th><th>Action</th><th>Download Receipt</th>";
+            } 
+            elseif (isset($_POST["showEventDetails"]) || (isset($_GET['role']) && $_GET['role'] === "event")) {
+                echo "<th>Event ID</th><th>Event Title</th><th>Event Type</th><th>Host ID</th><th>Host Name</th><th>Address</th><th>Date</th><th>Status</th><th>Action</th>";
+            } 
+            elseif (isset($_POST["showPaymentDetails"]) || (isset($_GET['role']) && $_GET['role'] === "payment")) {
+                echo "<th>Payment ID</th><th>Amount</th><th>Date</th><th>Host ID</th><th>Host Name</th><th>Action</th>";
+            }
+
+            echo "</tr>";
+
+            // Fetch Guests
+            if (isset($_POST["showGuestDetails"]) || (isset($_GET['role']) && $_GET['role'] === "guest")) {
+                $sql = "SELECT g.*, e.event_id, e.event_title 
+                        FROM guest_details g
+                        LEFT JOIN event_guest eg ON g.guest_id = eg.guest_id
+                        LEFT JOIN event_details e ON eg.event_id = e.event_id";
+
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>{$row['guest_id']}</td>
+                            <td>{$row['guest_name']}</td>
+                            <td>{$row['guest_address']}</td>
+                            <td>{$row['phone_number']}</td>
+                            <td>{$row['guest_email']}</td>
+                            <td>{$row['organization_name']}</td>
+                            <td>{$row['event_id']}</td>
+                            <td>{$row['event_title']}</td>
+                            <td><a href='update.php?role=guest&id={$row['guest_id']}'>Update</a> | 
+                                <a href='delete.php?role=guest&id={$row['guest_id']}'>Delete</a></td>
+                            <td><a href='receipt.php?role=guest&id={$row['guest_id']}'>Download</a></td>
+                          </tr>";
+                }
+            }
+
+
+            // Fetch Hosts
+            elseif (isset($_POST["showHostDetails"]) || (isset($_GET['role']) && $_GET['role'] === "host")) {
+                $sql = "SELECT * FROM host_details";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>{$row['host_id']}</td>
+                            <td>{$row['host_name']}</td>
+                            <td>{$row['phone_number']}</td>
+                            <td>{$row['host_email']}</td>
+                            <td>{$row['organization_name']}</td>
+                            <td><a href='update.php?role=host&id={$row['host_id']}'>Update</a> | 
+                                <a href='delete.php?role=host&id={$row['host_id']}'>Delete</a></td>
+                            <td><a href='receipt.php?role=host&id={$row['host_id']}'>Download</a></td>
+                          </tr>";
+                }
+            }
+
+            // Fetch Events
+            elseif (isset($_POST["showEventDetails"]) || (isset($_GET['role']) && $_GET['role'] === "event")) {
+                $sql = "SELECT e.*, h.host_id, h.host_name 
+                        FROM event_details e 
+                        LEFT JOIN host_details h ON e.host_id = h.host_id";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>{$row['event_id']}</td>
+                            <td>{$row['event_title']}</td>
+                            <td>{$row['event_type']}</td>
+                            <td>{$row['host_id']}</td>
+                            <td>{$row['host_name']}</td>
+                            <td>{$row['event_address']}</td>
+                            <td>{$row['event_date']}</td>
+                            <td>{$row['event_status']}</td>
+                            <td><a href='update.php?role=event&id={$row['event_id']}'>Update</a> | 
+                                <a href='delete.php?role=event&id={$row['event_id']}'>Delete</a></td>
+                          </tr>";
+                }
+            }
+
+            // Fetch Payments
+            elseif (isset($_POST["showPaymentDetails"]) || (isset($_GET['role']) && $_GET['role'] === "payment")) {
+                $sql = "SELECT p.*, h.host_id, h.host_name 
+                        FROM payment_details p 
+                        LEFT JOIN host_details h ON p.host_id = h.host_id";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>{$row['payment_id']}</td>
+                            <td>{$row['payable_amount']}</td>
+                            <td>{$row['payment_date']}</td>
+                            <td>{$row['host_id']}</td>
+                            <td>{$row['host_name']}</td>
+                            <td><a href='update.php?role=payment&id={$row['payment_id']}'>Update</a> | 
+                                <a href='delete.php?role=payment&id={$row['payment_id']}'>Delete</a></td>
+                          </tr>";
+                }
+            }
+
+            echo "</table>";
+            $conn->close();
+        ?>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <p>Event Management System</p>
+            <p>&copy; <?php echo date('Y'); ?> All Rights Reserved</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', function(){
+        const filter = searchInput.value.toLowerCase();
+        const rows = document.querySelectorAll('table tr:not(:first-child)');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(filter) ? '' : 'none';
+        });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+            const dropdownBtn = document.querySelector(".dropdown-btn");
+            const dropdownContent = document.querySelector(".dropdown-content");
+
+            dropdownBtn.addEventListener("click", () => {
+                dropdownContent.classList.toggle("show");
+            });
+
+            // Optional: close dropdown if clicked outside
+            window.addEventListener("click", (e) => {
+                if (!e.target.matches(".dropdown-btn")) {
+                    if (dropdownContent.classList.contains("show")) {
+                        dropdownContent.classList.remove("show");
+                    }
+                }
+            });
+        });
+</script>
 </body>
+</html>

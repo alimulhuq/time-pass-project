@@ -1,33 +1,97 @@
 <?php
     $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "event_management";
+    $username   = "root";
+    $password   = "";
+    $dbname     = "event_management";
 
+    // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if(!$conn){
-        die("Connection failed: " . mysqli_connect_error());
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    $id = $_POST['id'];
-
-    // Delete from database
-    if(){
-        $sql = "DELETE FROM  WHERE ID = '$id'";
-    }
-    elseif () {
-        $sql = "DELETE FROM  WHERE ID = '$id'";
+    // Check input
+    if (!isset($_GET['role'], $_GET['id'])) {
+        die("Invalid request");
     }
 
-    if (mysqli_query($conn, $sql)) {
-        echo"<script>
-                    alert('Student deleted successfully');
-                    window.location.href='showDetails.php';
-            </script>";
+    $role = $_GET['role'];
+    $id   = $_GET['id'];
+
+    if ($role == 'guest') {
+        // Delete from event_guest first (foreign key)
+        $stmt = $conn->prepare("DELETE FROM event_guest WHERE guest_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Delete guest
+        $stmt = $conn->prepare("DELETE FROM guest_details WHERE guest_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: showDetails.php?role=guest");
+        exit;
     }
-    else {
-        echo "Error deleting record: " . mysqli_error($conn);
+
+    if ($role == 'host') {
+        // Delete dependent records first
+        // 1. Payments
+        $stmt = $conn->prepare("DELETE FROM payment_details WHERE host_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 2. Events
+        $stmt = $conn->prepare("DELETE FROM event_details WHERE host_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 3. Host
+        $stmt = $conn->prepare("DELETE FROM host_details WHERE host_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: showDetails.php?role=host");
+        exit;
+    }
+
+    // Delete Event
+    if ($role == 'event') {
+        // Delete from event_guest first (if any guests registered)
+        $stmt = $conn->prepare("DELETE FROM event_guest WHERE event_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Delete payments related to the event
+        $stmt = $conn->prepare("DELETE FROM payment_details WHERE event_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Delete the event itself
+        $stmt = $conn->prepare("DELETE FROM event_details WHERE event_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: showDetails.php?role=event");
+        exit;
+    }
+
+    // Delete Payment
+    if ($role == 'payment') {
+        $stmt = $conn->prepare("DELETE FROM payment_details WHERE payment_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: showDetails.php?role=payment");
+        exit;
     }
 
     $conn->close();

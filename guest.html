@@ -3,27 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendee registration</title>
+    <title>Guest Registration - Event Management</title>
     <link rel="stylesheet" href="formStyle.css">
 </head>
 <body>
     <div class="container">
-        <div class="heading-div">
-            <h1>Fill Up the Form to Attend Event</h1>
+        <div class="header">
+            <h1>👤 Guest Registration</h1>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="host.html" class="nav-btn">Host Registration</a>
+                <a href="payment.html" class="nav-btn">Payment</a>
+            </div>
         </div>
-        <div class="form-div">
-            <form action="dataBase.php" method="POST">
-                <input type="number" name="guestID" placeholder="Guest ID" required>
-                <input type="text" name="guestName" placeholder="Guest Name" required>
-                <input type="text" name="address" placeholder="Address" required>
-                <input type="digit" name="guestPhoneContact" placeholder="Phone Number" required>
-                <input type="text" name="guestEmail" placeholder="Email" required>
-                <input type="text" name="organizationName" placeholder="Organization" required>
-                <input type="text" name="hostName" placeholder="Host Name" required>
-                <input type="datetime-local" name="eventDateTime" placeholder="Event Data & Time" required>
-                <input type="text" name="attendStatus" placeholder="Attend Status" required>
-		        <button class="submitBtn" name="guestDetails">Submit</button>
-	        </form>
+
+        <div class="form-container">
+            <h2 class="form-title">Guest Registration Form</h2>
+            
+            <form action="insertDetails.php" method="POST">
+                <div class="form-group">
+                    <label for="guestName">Guest Name:</label>
+                    <input type="text" id="guestName" name="guestName" class="form-control" required 
+                           placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="guestAddress">Guest Address:</label>
+                    <textarea id="guestAddress" name="guestAddress" class="form-control" 
+                              placeholder="Enter your complete address"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="guestPhoneContact">Phone Contact:</label>
+                    <input type="tel" id="guestPhoneContact" name="guestPhoneContact" class="form-control" 
+                           placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="guestEmail">Email Address:</label>
+                    <input type="email" id="guestEmail" name="guestEmail" class="form-control" required 
+                           placeholder="Enter your email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="organizationName">Organization Name:</label>
+                    <input type="text" id="organizationName" name="organizationName" class="form-control" 
+                           placeholder="Enter your organization name (optional)">
+                </div>
+
+                <div class="form-group">
+                    <label for="hostID">Host ID:</label>
+                    <input type="text" id="hostID" name="hostID" class="form-control" required 
+                           placeholder="Enter the host ID for the event">
+                </div>
+
+                <div class="form-group">
+                    <label for="eventDateTime">Event Date & Time:</label>
+                    <input type="datetime-local" id="eventDateTime" name="eventDateTime" class="form-control" required>
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" name="guestSubmitButton" class="submit-btn">Submit Registration</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>

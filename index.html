@@ -7,70 +7,64 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="logo">📅 EventManager</div>
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">Events</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-            </nav>
-            <div class="search-box">
-                <input type="text" placeholder="Search events...">
-                <button>🔍</button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <div class="container">
-            <h1>Welcome to Event Management System</h1>
-            <p class="subtitle">Streamline your event planning process</p>
-            
-            <div class="button-container">
-                <button class="btn-large"><a href="organizer.html">Register As Organizer</a></button>
-                <button class="btn-large"><a href="guest.html">Register As Guest</a></button>
-                
-                <div class="btn-grid">
-                    <form action="showDetails.php" method="POST">
-                        <button class="btn-small" name="hostDetail">Host Detail</button>
-                        <button class="btn-small" name="guestDetail">Guest Detail</button>
-                        <button class="btn-small" name="eventDetail">Event Detail</button>
-                        <button class="btn-small" name="paymentDetail">Payment Detail</button>
-                    </form>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Event Management System</h1>
+            <div class="nav-menu">
+                <a href="guest.html" class="nav-btn">Guest Registration</a>
+                <a href="host.html" class="nav-btn">Host Registration</a>
+                <a href="payment.html" class="nav-btn">Payment</a>
+                <div class="dropdown">
+                    <button class="nav-btn dropdown-btn">View Data ▼</button>
+                    <div class="dropdown-content">
+                        <form action="showDetails.php" method="POST">
+                            <button name="showHostDetails">Host Detail</button>
+                            <button name="showGuestDetails">Guest Detail</button>
+                            <button name="showPaymentDetails">Payment Detail</button>
+                            <button name="showEventDetails">Event Detail</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
+        <div class="welcome-section">
+            <h2>Welcome to Event Management System</h2>
+                <p>
+                    Manage your events seamlessly with our comprehensive platform. Register as a guest or host, and handle payments securely.Experience effortless event management with intuitive tools at your fingertips. Stay updated with real-time notifications and personalized reminders for every event.
+                    Connect with a vibrant community, share your experiences, and discover exciting events near you. Enjoy peace of mind with secure transactions and reliable support every step of the way.
+                </p>
+        </div>
+
+        <footer class="footer">
             <div class="footer-content">
-                <div>
-                    <h3>📅 EventManager</h3>
-                    <p>Your event management solution</p>
-                </div>
-                <div>
-                    <h4>Quick Links</h4>
-                    <a href="#">Home</a>
-                    <a href="#">Events</a>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
-                </div>
-                <div>
-                    <h4>Contact</h4>
-                    <p>📧 support@eventmanager.com</p>
-                    <p>📞 +1 (555) 123-4567</p>
-                </div>
+                <p>&copy; 2025 Event Management System. All rights reserved.</p>
+                <p>Name : Md. Alimul Huq</p>
+                <p>ID : 23303249</p>
+                <p>Course Name : Database Management System</p>
+                <p>Course Code : CSC 434</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 EventManager. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dropdownBtn = document.querySelector(".dropdown-btn");
+            const dropdownContent = document.querySelector(".dropdown-content");
+
+            dropdownBtn.addEventListener("click", () => {
+                dropdownContent.classList.toggle("show");
+            });
+
+            // Optional: close dropdown if clicked outside
+            window.addEventListener("click", (e) => {
+                if (!e.target.matches(".dropdown-btn")) {
+                    if (dropdownContent.classList.contains("show")) {
+                        dropdownContent.classList.remove("show");
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

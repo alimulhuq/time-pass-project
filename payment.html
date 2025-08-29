@@ -3,26 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment for event</title>
+    <title>Payment - Event Management</title>
     <link rel="stylesheet" href="formStyle.css">
 </head>
 <body>
     <div class="container">
-        <div class="heading-div">
-            <h1>Pay to confirm your attendance</h1>
+        <div class="header">
+            <h1>💳 Payment</h1>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="guest.html" class="nav-btn">Guest Registration</a>
+                <a href="host.html" class="nav-btn">Host Registration</a>
+            </div>
         </div>
-        <div class="form-div">
-            <form action="dataBase.php" method="POST">
-                <input type="number" name="paymentID" placeholder="Payment ID" required>
-                <input type="number" name="userID" placeholder="User ID" required>
-                <input type="number" name="eventID" placeholder="Event ID" required>
-                <input type="number" name="payAmount" placeholder="Payable Amount" required>
-                <input type="text" name="paymentMethod" placeholder="Payment Method" required>
-                <input type="datetime-local" name="dataTime" placeholder="Date & Time" required>
-                <input type="text" name="paymentStatus" placeholder="Payment Status" required>
-                <input type="number" name="transactionID" placeholder="Transaction ID" required>
-		        <button class="submitBtn" name="paymentDetails">Pay Bill</button>
-	        </form>
+
+        <div class="form-container">
+            <h2 class="form-title">Payment Form</h2>
+            
+            <form action="insertDetails.php" method="POST">
+                <div class="form-group">
+                    <label for="hostID">Host ID:</label>
+                    <input type="text" id="hostID" name="hostID" class="form-control" required 
+                           placeholder="Enter host ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="eventID">Event ID:</label>
+                    <input type="text" id="eventID" name="eventID" class="form-control" required 
+                           placeholder="Enter event ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="payAmount">Pay Amount:</label>
+                    <input type="number" id="payAmount" name="payAmount" class="form-control" required 
+                           step="0.01" min="0" placeholder="Enter payment amount">
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" name="paymentMethod" class="form-control" required>
+                        <option value="">Select payment method</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cash">Cash</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Net Banking">Net Banking</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dataTime">Date & Time:</label>
+                    <input type="datetime-local" id="dataTime" name="dataTime" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentStatus">Payment Status:</label>
+                    <select id="paymentStatus" name="paymentStatus" class="form-control" required>
+                        <option value="">Select payment status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Failed">Failed</option>
+                        <option value="Refunded">Refunded</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="transactionID">Transaction ID:</label>
+                    <input type="text" id="transactionID" name="transactionID" class="form-control" required 
+                           placeholder="Enter transaction ID">
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" name="paymentButton" class="submit-btn payment-btn">Pay Bill</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
