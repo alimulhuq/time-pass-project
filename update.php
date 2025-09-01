@@ -155,9 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="header">
             <h1>🎉 Event Management System</h1>
             <div class="nav-menu">
-                <a href="guest.html" class="nav-btn">Guest Registration</a>
-                <a href="host.html" class="nav-btn">Host Registration</a>
-                <a href="payment.html" class="nav-btn">Payment</a>
+                <a href="index.html" class="nav-btn">Home</a>
                 <div class="dropdown">
                     <button class="nav-btn dropdown-btn">View Data ▼</button>
                     <div class="dropdown-content">
