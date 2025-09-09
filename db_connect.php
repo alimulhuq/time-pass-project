@@ -9,6 +9,7 @@
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         error_log("Connection failed in db_connect.php: " . $e->getMessage());
-        die("Connection failed: " . $e->getMessage());
+        // In production, redirect or show user-friendly message instead of die
+        die("Database connection failed. Please try again later.");
     }
 ?>

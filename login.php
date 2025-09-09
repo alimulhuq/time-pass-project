@@ -173,6 +173,7 @@
                     <span class="logo-text">EventPro</span>
                 </a>
                 <p class="footer-description">Professional event management services creating memorable experiences for every occasion.</p>
+                <p class="copyright">© 2025 EventPro. All rights reserved.</p>
             </div>
             <div class="footer-links">
                 <div class="footer-column">
@@ -183,20 +184,14 @@
                     <a href="#contact">Contact</a>
                 </div>
                 <div class="footer-column">
-                    <h4>Contact Info</h4>
-                    <p>📧 info@eventpro.com</p>
-                    <p>📞 +1 (555) 123-4567</p>
-                    <p>📍 123 Event Street, City</p>
+                    <div class="student-info">
+                        <p><strong>Name:</strong> MD. Alimul Huq</p>
+                        <p><strong>ID:</strong> 23303249</p>
+                        <p><strong>Programme:</strong> BCSE</p>
+                        <p><strong>Course Code:</strong> 434</p> 
+                        <p><strong>Course Name:</strong> Database Management System</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="copyright">© 2025 EventPro. All rights reserved.</p>
-            <div class="student-info">
-                <p><strong>Name:</strong> MD. Alimul Huq</p>
-                <p><strong>ID:</strong> 23303249</p>
-                <p><strong>Programme:</strong> BCSE</p>
-                <p><strong>Course Code:</strong> 434 | <strong>Course Name:</strong> Database Management System</p>
             </div>
         </div>
     </footer>
